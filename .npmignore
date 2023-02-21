@@ -1,0 +1,14 @@
+# Folders
+lib/
+tests/
+examples/
+.vscode/
+.github/
+
+# Lints
+.eslint*
+
+# Configs
+babel.*
+*-lock.json
+tsconfig.json
