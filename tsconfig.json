@@ -8,14 +8,14 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "outDir": "dist",
-    "baseUrl": "lib",
+    "outDir": "./dist",
+    "baseUrl": "./lib",
     "paths": {
       "*": ["./*"]
     },
     "types": ["node"],
-    "typeRoots": ["lib/typings", "./node_modules/@types"]
+    "typeRoots": ["./lib/typings", "./node_modules/@types"]
   },
-  "include": ["lib/**/*"],
-  "exclude": ["node_modules", "tests"]
+  "include": ["./lib/**/*"],
+  "exclude": ["./node_modules", "./tests", "./dist"]
 }
