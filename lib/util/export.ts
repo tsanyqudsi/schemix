@@ -14,6 +14,7 @@ export const exportSchema = async (
   filename: string,
   schema: PrismaSchema
 ) => {
+  console.log(`filepath: ${filepath}`);
   fs.writeFileSync(
     path.join(filepath, `${filename}.prisma`),
     await schema.toString(),

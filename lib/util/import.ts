@@ -1,6 +1,6 @@
 import { readdir, stat } from "fs/promises";
 import { join } from "path";
-
+import { pathToFileURL } from "url";
 const isDirectory = async (fullPath: string): Promise<boolean> => {
   return (await stat(fullPath)).isDirectory();
 };
@@ -16,11 +16,15 @@ async function asyncFilter<T>(
 
 const getAllFilesRecursively = async (
   basePath: string,
-  folderName: string
+  folderName: string,
+  isRecursive: boolean
 ): Promise<string[]> => {
   const directoryPath = join(basePath, folderName);
-
+  console.log(isRecursive);
+  console.log(`directoryPath: ${directoryPath}`);
   const fileNames = await readdir(directoryPath);
+  console.log(`fileNames: ${fileNames}`);
+  console.log(`sadsad`)
   const directories = await asyncFilter(fileNames, async (fileName) =>
     isDirectory(join(directoryPath, fileName))
   );
@@ -31,7 +35,7 @@ const getAllFilesRecursively = async (
   const filesInDirectories = (
     await Promise.all(
       directories.map((directory) =>
-        getAllFilesRecursively(directoryPath, directory)
+        getAllFilesRecursively(directoryPath, directory, true)
       )
     )
   ).flat();
@@ -54,7 +58,8 @@ const importFilteredFiles = (filePaths: string[]): Promise<unknown>[] => {
 };
 
 export const importAllFiles = async (basePath: string, folderName: string) => {
-  return getAllFilesRecursively(basePath, folderName)
+  const URLPath = pathToFileURL(basePath).href;
+  return getAllFilesRecursively(URLPath, folderName, false)
     .then((files) => Promise.all(importFilteredFiles(files)))
     .catch(console.error);
 };
